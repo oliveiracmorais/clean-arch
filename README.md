@@ -6,9 +6,10 @@
 
 * com o docker client em funcionamento, execute:  
 _docker-compose up -d_  
-* certifique-se de criar um database "orders" no Mysql e a tabela com os seguintes campos: id do tipo string, price, tax e final_price do tipo float.  
+* antes de executar o programa pela primeira vez, digite o comando abaixo, para criar a tabela 'orders' no bando de dados (migrations):  
+  _make migrate_  
 * execute a aplicação com o comando, dentro da pasta cmd/ordersystem:  
-_go run main.go wire_gen.go_  
+_make run_  
 * a aplicação subirá três serviços:
   * web server em http://localhost:8080  
   * gRPC server na porta 50051  
