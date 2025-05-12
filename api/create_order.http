@@ -4,9 +4,9 @@ Host: localhost:8000
 Content-Type: application/json
 
 {
-    "id":"jjjjj",
-    "price": 120.55,
-    "tax": 10.45
+    "id":"22222",
+    "price": 500.80,
+    "tax": 25.00
 }
 
 ###

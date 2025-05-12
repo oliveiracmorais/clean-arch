@@ -6,17 +6,16 @@
 
 * com o docker client em funcionamento, execute:  
 _docker-compose up -d_  
-* antes de executar o programa pela primeira vez, digite o comando abaixo, para criar a tabela 'orders' no bando de dados (migrations):  
-  _make migrate_  
-* execute a aplicação com o comando, dentro da pasta cmd/ordersystem:  
-_make run_  
-* a aplicação subirá três serviços:
+
+* a aplicação subirá os seguintes serviços:
   * web server em http://localhost:8080  
   * gRPC server na porta 50051  
-  * GraphQL server na porta 8080
+  * GraphQL server na porta 8080  
+  * RabbitMQ na porta 15672
 
 ### Testar o serviço Web Server
-* utilize o arquivo /api/create_order.http e acione as requisições createOrder e order para criar um "order" e listas os "ordens", respectivamente.
+* utilize o arquivo /api/create_order.http e acione as requisições createOrder e order para criar um "order" e listas os "ordens", respectivamente.  
+
 ### Testar o serviço gRPC Server  
 * execute o comando abaixo para utilizar a ferramenta Evans:  
     _evans -r repl --host localhost --port 50051_  

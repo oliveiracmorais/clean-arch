@@ -1,6 +1,11 @@
 package configs
 
-import "github.com/spf13/viper"
+import (
+	"fmt"
+	"os"
+
+	"github.com/spf13/viper"
+)
 
 type conf struct {
 	DBDriver          string `mapstructure:"DB_DRIVER"`
@@ -16,7 +21,18 @@ type conf struct {
 	AmpqPort          string `mapstructure:"AMPQ_PORT"`
 }
 
-func LoadConfig(path string) (*conf, error) {
+func NewConfig() (*conf, error) {
+	_, err := os.Stat(".env")
+
+	if os.IsExist(err) {
+		fmt.Println("Tentou carregar o arquivo .env")
+		return loadConfig(".")
+	}
+	fmt.Println("Carregando variáveis de ambiente")
+	return loadConfigEnvironment(), nil
+}
+
+func loadConfig(path string) (*conf, error) {
 	var cfg *conf
 	viper.SetConfigName("app_config")
 	viper.SetConfigType("env")
@@ -32,4 +48,22 @@ func LoadConfig(path string) (*conf, error) {
 		panic(err)
 	}
 	return cfg, err
+}
+
+func loadConfigEnvironment() *conf {
+	cfg := &conf{
+		DBDriver:          os.Getenv("DB_DRIVER"),
+		DBHost:            os.Getenv("DB_HOST"),
+		DBPort:            os.Getenv("DB_PORT"),
+		DBUser:            os.Getenv("DB_USER"),
+		DBPassword:        os.Getenv("DB_PASSWORD"),
+		DBName:            os.Getenv("DB_NAME"),
+		WebServerPort:     os.Getenv("WEB_SERVER_PORT"),
+		GRPCServerPort:    os.Getenv("GRPC_SERVER_PORT"),
+		GraphQLServerPort: os.Getenv("GRAPHQL_SERVER_PORT"),
+		AmpqURL:           "amqp://guest:guest@rabbitmq",
+		AmpqPort:          os.Getenv("AMPQ_PORT"),
+	}
+
+	return cfg
 }
